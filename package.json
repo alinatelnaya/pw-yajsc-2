@@ -1,0 +1,29 @@
+{
+  "name": "pw-yajsc-2",
+  "version": "1.0.0",
+  "description": "My first Playwright project within YAJSC Group 13",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test",
+    "ui:mode": " npx playwright test --ui",
+    "codegen": " npx playwright codegen",
+    "report": " npx playwright show-report"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alinatelnaya/pw-yajsc-2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/alinatelnaya/pw-yajsc-2/issues"
+  },
+  "homepage": "https://github.com/alinatelnaya/pw-yajsc-2#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.62.1",
+    "@types/node": "^26.2.0",
+    "typescript": "^7.0.2"
+  }
+}
