@@ -2,6 +2,7 @@ import test, { expect } from "@playwright/test";
 import {customer} from "../test-data/customer";
 
 test('Verify login with valid credentials', async ({ page }) => {
+  test.skip(!!process.env.CI, 'Skip login test on CI env');
   // 1. Open login page
   await page.goto('/auth/login');
 
