@@ -1,7 +1,12 @@
 import { Locator, Page } from "@playwright/test";
+import { HeaderFragment } from "./header.page";
+import { SidebarFragment } from "./sidebar.page";
 
 export class HomePage {
   readonly page: Page;
+  readonly path: string = '/';
+  readonly header: HeaderFragment;
+  readonly sidebar: SidebarFragment;
   readonly heroBanner: Locator;
   readonly compareBar: Locator;
   readonly clearCompareButton: Locator;
@@ -9,6 +14,8 @@ export class HomePage {
 
   constructor (page: Page) {
     this.page = page;
+    this.header = new HeaderFragment(page);
+    this.sidebar = new SidebarFragment(page);
     this.heroBanner = this.page.getByRole('img', {name: 'Banner'});
     this.compareBar = this.page.getByTestId('comparison-bar');
     this.clearCompareButton = this.page.getByTestId('clear-comparison');
@@ -27,6 +34,16 @@ export class HomePage {
     return this.page.locator('.card').filter({hasText: productName});
   }
 
+  // ==========================================
+  // Page Actions
+  // ==========================================
+
+  /**
+   * Navigates directly to the home page URL.
+   */
+  async goto(): Promise<void> {
+    await this.page.goto(this.path);
+  }
 
   // ==========================================
   // Product Card Actions

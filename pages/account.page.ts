@@ -1,7 +1,10 @@
 import { Locator, Page } from "@playwright/test";
+import { HeaderFragment } from "./header.page";
 
 export class AccountPage {
   readonly page: Page;
+  readonly path: string = '/account';
+  readonly header: HeaderFragment;
   readonly accountPageTitle: Locator;
   readonly accountPageDescription: Locator;
   readonly favoritesButton: Locator;
@@ -11,12 +14,24 @@ export class AccountPage {
 
   constructor (page: Page) {
     this.page = page;
+    this.header = new HeaderFragment(page);
     this.accountPageTitle = page.getByTestId('page-title');
     this.accountPageDescription = page.getByText('Here you can manage your profile, favorites and orders.');
     this.favoritesButton = page.getByTestId('nav-favorites');
     this.profileButton = page.getByTestId('nav-profile');
     this.invoicesButton = page.getByTestId('nav-invoices');
     this.messagesButton = page.getByTestId('nav-messages');
+  }
+
+  // ==========================================
+  // Page Actions
+  // ==========================================
+
+  /**
+   * Navigates directly to the account page URL.
+   */
+  async goto(): Promise<void> {
+    await this.page.goto(this.path);
   }
 
   // ==========================================

@@ -15,7 +15,6 @@ export class HeaderFragment {
   readonly contactLink: Locator;
   readonly signInLink: Locator;
   readonly languageDropdown: Locator;
-  readonly languages: Record<LanguageCode, Locator>;
   readonly userMenuDropdown: Locator;
   readonly myAccountOption: Locator;
   readonly myFavoritesOption: Locator;
@@ -44,15 +43,6 @@ export class HeaderFragment {
 
     // Languages
     this.languageDropdown = this.page.getByTestId('language-select');
-    this.languages = {
-      de: this.page.getByTestId('lang-de'),
-      el: this.page.getByTestId('lang-el'),
-      en: this.page.getByTestId('lang-en'),
-      es: this.page.getByTestId('lang-es'),
-      fr: this.page.getByTestId('lang-fr'),
-      nl: this.page.getByTestId('lang-nl'),
-      tr: this.page.getByTestId('lang-tr'),
-    };
 
     // Logged in user options
     this.userMenuDropdown = this.page.getByTestId('nav-menu');
@@ -136,12 +126,20 @@ export class HeaderFragment {
   }
 
   /**
+   * Gets application language locator according to the specified code.
+   * @param code Two-letter ISO language code (e.g., 'en', 'de').
+   */
+  getLanguageByCode(code: LanguageCode): Locator {
+    return this.page.getByTestId(`lang-${code}`);
+  }
+
+  /**
    * Switches application language to the specified code.
    * @param code Two-letter ISO language code (e.g., 'en', 'de').
    */
   async changeLanguage(code: LanguageCode): Promise<void> {
     await this.openLanguageDropdown();
-    await this.languages[code].click();
+    await this.getLanguageByCode(code).click();
   }
 
   // ==========================================
