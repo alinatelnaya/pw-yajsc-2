@@ -1,6 +1,6 @@
-import { Locator, Page } from "@playwright/test";
-import { HeaderFragment } from "./header.page";
-import { SidebarFragment } from "./sidebar.page";
+import { Locator, Page } from '@playwright/test';
+import { HeaderFragment } from './header.page';
+import { SidebarFragment } from './sidebar.page';
 
 export class HomePage {
   readonly page: Page;
@@ -11,15 +11,19 @@ export class HomePage {
   readonly compareBar: Locator;
   readonly clearCompareButton: Locator;
   readonly compareNowButton: Locator;
+  readonly productName: Locator;
+  readonly productPrice: Locator;
 
-  constructor (page: Page) {
+  constructor(page: Page) {
     this.page = page;
     this.header = new HeaderFragment(page);
     this.sidebar = new SidebarFragment(page);
-    this.heroBanner = this.page.getByRole('img', {name: 'Banner'});
+    this.heroBanner = this.page.getByRole('img', { name: 'Banner' });
     this.compareBar = this.page.getByTestId('comparison-bar');
     this.clearCompareButton = this.page.getByTestId('clear-comparison');
     this.compareNowButton = this.page.getByTestId('compare-link');
+    this.productName = this.page.getByTestId('product-name');
+    this.productPrice = this.page.getByTestId('product-price');
   }
 
   // ==========================================
@@ -30,8 +34,8 @@ export class HomePage {
    * Finds the card container element for a specific product.
    * @param productName Visible title of the product card.
    */
-  private getProductCard(productName: string): Locator{
-    return this.page.locator('.card').filter({hasText: productName});
+  private getProductCard(productName: string): Locator {
+    return this.page.locator('.card').filter({ hasText: productName });
   }
 
   // ==========================================
@@ -48,6 +52,23 @@ export class HomePage {
   // ==========================================
   // Product Card Actions
   // ==========================================
+
+  /**
+   * Gets all displayed product names.
+   * @returns Array of product name strings.
+   */
+  async getProductNames(): Promise<string[]> {
+    return await this.productName.allInnerTexts();
+  }
+
+  /**
+   * Gets all displayed product prices as numbers (strips `$`).
+   * @returns Array of numeric prices.
+   */
+  async getProductPrices(): Promise<number[]> {
+    const prices = await this.productPrice.allInnerTexts();
+    return prices.map((price) => parseFloat(price.replace('$', '')));
+  }
 
   /**
    * Opens the detail page for a given product by clicking its card.
@@ -69,7 +90,7 @@ export class HomePage {
    * Removes a product from the comparison list via its scale icon.
    * @param productName Visible name of the product to remove.
    */
-   async removeProductFromComparison(productName: string): Promise<void> {
+  async removeProductFromComparison(productName: string): Promise<void> {
     await this.getProductCard(productName).getByTestId('compare-btn').click();
   }
 
@@ -96,7 +117,7 @@ export class HomePage {
    * @param pageNumber The target page number (e.g., 2 or '2').
    */
   async clickPaginationPage(pageNumber: string | number): Promise<void> {
-    await this.page.getByRole('button', {name: `Page-${pageNumber}`}).click();
+    await this.page.getByRole('button', { name: `Page-${pageNumber}` }).click();
   }
 
   /** Navigates to the next page of products. */
@@ -112,5 +133,4 @@ export class HomePage {
   // TODO: Improve logic for add/remove from comparison
   // TODO: Add several products to comparison
   // TODO: getComparisonCount
-
 }

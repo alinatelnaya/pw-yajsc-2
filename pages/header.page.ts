@@ -22,7 +22,8 @@ export class HeaderFragment {
   readonly myInvoicesOption: Locator;
   readonly myMessagesOption: Locator;
   readonly signOutOption: Locator;
-
+  readonly cartLink: Locator;
+  readonly cartQuantity: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -52,6 +53,10 @@ export class HeaderFragment {
     this.myInvoicesOption = this.page.getByTestId('nav-my-invoices');
     this.myMessagesOption = this.page.getByTestId('nav-my-messages');
     this.signOutOption = this.page.getByTestId('nav-sign-out');
+
+    // Cart
+    this.cartLink = this.page.getByTestId('nav-cart');
+    this.cartQuantity = this.page.getByTestId('cart-quantity');
   }
 
   // ==========================================
@@ -185,5 +190,10 @@ export class HeaderFragment {
   async signOut(): Promise<void> {
     await this.openUserMenuDropdown();
     await this.signOutOption.click();
+  }
+
+  /** Navigates to the checkout page. */
+  async navigateToCheckout(): Promise<void> {
+    await this.cartLink.click();
   }
 }

@@ -1,5 +1,5 @@
-import type { Locator, Page } from "@playwright/test";
-import { HeaderFragment } from "./header.page";
+import type { Locator, Page } from '@playwright/test';
+import { HeaderFragment } from './header.page';
 
 export class LoginPage {
   readonly page: Page;

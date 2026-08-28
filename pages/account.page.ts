@@ -1,5 +1,5 @@
-import { Locator, Page } from "@playwright/test";
-import { HeaderFragment } from "./header.page";
+import { Locator, Page } from '@playwright/test';
+import { HeaderFragment } from './header.page';
 
 export class AccountPage {
   readonly page: Page;
@@ -12,11 +12,13 @@ export class AccountPage {
   readonly invoicesButton: Locator;
   readonly messagesButton: Locator;
 
-  constructor (page: Page) {
+  constructor(page: Page) {
     this.page = page;
     this.header = new HeaderFragment(page);
     this.accountPageTitle = page.getByTestId('page-title');
-    this.accountPageDescription = page.getByText('Here you can manage your profile, favorites and orders.');
+    this.accountPageDescription = page.getByText(
+      'Here you can manage your profile, favorites and orders.',
+    );
     this.favoritesButton = page.getByTestId('nav-favorites');
     this.profileButton = page.getByTestId('nav-profile');
     this.invoicesButton = page.getByTestId('nav-invoices');

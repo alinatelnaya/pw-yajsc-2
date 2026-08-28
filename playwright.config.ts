@@ -26,16 +26,16 @@ export default defineConfig({
     [
       'html',
       {
-        outputFolder:'./playwright-report/html',
+        outputFolder: './playwright-report/html',
         open: 'never',
-      }
+      },
     ],
     [
       'list',
       {
         printSteps: true,
-      }
-    ]
+      },
+    ],
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
@@ -49,19 +49,33 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
+    { name: 'auth', testMatch: /auth\.login\.spec\.ts/ },
+
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: {
+        ...devices['Desktop Chrome'],
+        storageState: 'playwright/.auth/user.json',
+      },
+      testIgnore: /auth\.login\.spec\.ts/,
+      dependencies: ['auth'],
     },
 
     // {
     //   name: 'firefox',
-    //   use: { ...devices['Desktop Firefox'] },
+    //   use: {
+    //   ...devices['Desktop Firefox'],
+    //   storageState: 'playwright/.auth/user.json',
+    // },
+    //   dependencies: ['auth'],
     // },
 
     // {
     //   name: 'webkit',
-    //   use: { ...devices['Desktop Safari'] },
+    //   use: { ...devices['Desktop Safari'],
+    //   storageState: 'playwright/.auth/user.json',
+    // },
+    //   dependencies: ['auth'],
     // },
 
     /* Test against mobile viewports. */
