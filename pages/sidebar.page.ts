@@ -1,5 +1,4 @@
-import type { Locator, Page } from "@playwright/test";
-
+import type { Locator, Page } from '@playwright/test';
 
 export class SidebarFragment {
   readonly page: Page;
@@ -24,8 +23,8 @@ export class SidebarFragment {
    * Finds a checkbox locator by its exact label name.
    * @param name The visible label text of the checkbox.
    */
-  private getCheckboxByName(name: string): Locator{
-    return this.page.getByRole('checkbox', {name, exact: true});
+  private getCheckboxByName(name: string): Locator {
+    return this.page.getByRole('checkbox', { name, exact: true });
   }
 
   // ==========================================
@@ -37,9 +36,12 @@ export class SidebarFragment {
    * @param optionName Visible label of the sort option (e.g., 'Price (Low - High)').
    */
   async sortBy(optionName: string): Promise<void> {
-    await this.sortDropdown.selectOption({label: optionName});
+    await this.sortDropdown.selectOption({ label: optionName });
   }
 
+  async selectCategory(categoryName: string): Promise<void> {
+    await this.getCheckboxByName(categoryName).check();
+  }
   /**
    * Checks one or multiple filter checkboxes by label name.
    * @param filterName Single filter name or array of filter names to select.
