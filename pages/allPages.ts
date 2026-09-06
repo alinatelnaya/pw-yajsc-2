@@ -9,6 +9,7 @@ import { BillingAddressCheckoutPage } from './billingAddressCheckout.page';
 import { PaymentCheckoutPage } from './paymentCheckout.page';
 
 export class AllPages {
+  page: Page;
   accountPage: AccountPage;
   cartPage: CartPage;
   homePage: HomePage;
@@ -19,6 +20,7 @@ export class AllPages {
   paymentCheckoutPage: PaymentCheckoutPage;
 
   constructor(page: Page) {
+    this.page = page;
     this.accountPage = new AccountPage(page);
     this.cartPage = new CartPage(page);
     this.homePage = new HomePage(page);
