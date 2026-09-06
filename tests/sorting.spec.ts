@@ -1,5 +1,4 @@
-import { expect, test } from '@playwright/test';
-import { HomePage } from '../pages/home.page';
+import { expect, test } from '../fixtures';
 
 [
   {
@@ -14,17 +13,15 @@ import { HomePage } from '../pages/home.page';
   },
 ].forEach((testData) => {
   test(`Verify user can perform sorting by ${testData.testName}`, async ({
-    page,
+    app,
   }) => {
-    const homePage = new HomePage(page);
-
     // 1. Open homepage and select sort option
-    await homePage.goto();
-    await homePage.sidebar.sortBy(testData.sortOption);
+    await app.homePage.goto();
+    await app.homePage.sidebar.sortBy(testData.sortOption);
 
     // 3. Verify all the displayed products are sorted by names ascending or descending
     await expect(async () => {
-      const actualProductNames = await homePage.getProductNames();
+      const actualProductNames = await app.homePage.getProductNames();
       const expectedProductNames = [...actualProductNames].sort(
         testData.sortFunction,
       );
@@ -47,17 +44,15 @@ import { HomePage } from '../pages/home.page';
   },
 ].forEach((testData) => {
   test(`Verify user can perform sorting by ${testData.testName}`, async ({
-    page,
+    app,
   }) => {
-    const homePage = new HomePage(page);
-
     // 1. Open homepage and select sort option
-    await homePage.goto();
-    await homePage.sidebar.sortBy(testData.sortOption);
+    await app.homePage.goto();
+    await app.homePage.sidebar.sortBy(testData.sortOption);
 
     // 2. Get an array of all product prices and sort it
     await expect(async () => {
-      const actualProductPrices = await homePage.getProductPrices();
+      const actualProductPrices = await app.homePage.getProductPrices();
       const expectedProductPrices = [...actualProductPrices].sort(
         testData.sortFunction,
       );
