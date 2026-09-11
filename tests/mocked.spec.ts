@@ -5,6 +5,7 @@ test('Verify mocked products response renders 20 items on UI', async ({
   page,
 }) => {
   await page.route('**/products*', async (route) => {
+    // 1. Create an array of 20 products
     const json = Array.from({ length: 20 }, (_, index) => ({
       id: `mocked-product-id${index + 1}`,
       name: `Mocked Product ${index + 1}`,
@@ -34,6 +35,8 @@ test('Verify mocked products response renders 20 items on UI', async ({
         name: 'ForgeFlex Tools',
       },
     }));
+
+    // 2. Fulfill route with mocked JSON response
     await route.fulfill({
       status: 200,
       contentType: 'application/json',
@@ -48,8 +51,11 @@ test('Verify mocked products response renders 20 items on UI', async ({
       }),
     });
   });
-  // 1. Open home page and navigate to product details page
+
+  // 3. Open home page
   await app.homePage.goto();
+
+  // 4. Assert that all 20 mocked items render on the UI
   const productCards = page.locator('.card');
   await expect(productCards).toHaveCount(20);
 });
